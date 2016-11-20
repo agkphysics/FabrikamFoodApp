@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FabrikamFoodApp.Pages.HomePage"
+             xmlns:cv="clr-namespace:Xamarin.Forms;assembly=Xamarin.Forms.CarouselView"
+             Title="Home">
+    <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand">
+        <Image x:Name="image" Source="hot_chocolate.jpg" WidthRequest="600" HeightRequest="400" Aspect="AspectFill" />
+        <Label x:Name="label" Text="Testing" HorizontalTextAlignment="Center" BackgroundColor="Maroon" />
+    </StackLayout>
+</ContentPage>

@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FabrikamFoodApp.Pages.AboutPage"
+             Title="About">
+    <StackLayout VerticalOptions="Start" HorizontalOptions="Center">
+        <Label Text="About" FontSize="42" HorizontalTextAlignment="Center" Margin="0,20,0,100" />
+        <Label Text="Fabrikam Food App" HorizontalTextAlignment="Center" />
+        <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+            <Label Text="Version:" FontAttributes="Bold" />
+            <Label Text="0.1.0" />
+        </StackLayout>
+        <Label Text="Stock photos taken from picjumbo.com" HorizontalTextAlignment="Center" />
+    </StackLayout>
+</ContentPage>
