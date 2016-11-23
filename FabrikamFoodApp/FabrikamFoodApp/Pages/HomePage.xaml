@@ -4,8 +4,28 @@
              x:Class="FabrikamFoodApp.Pages.HomePage"
              xmlns:cv="clr-namespace:Xamarin.Forms;assembly=Xamarin.Forms.CarouselView"
              Title="Home">
-    <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand">
-        <Image x:Name="image" Source="hot_chocolate.jpg" WidthRequest="600" HeightRequest="400" Aspect="AspectFill" />
-        <Label x:Name="label" Text="Testing" HorizontalTextAlignment="Center" BackgroundColor="Maroon" />
-    </StackLayout>
+    <Grid RowSpacing="0" Margin="0" VerticalOptions="FillAndExpand">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <cv:CarouselView x:Name="imageSlider" Grid.Row="0" Margin="0">
+            <cv:CarouselView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout>
+                        <Image Source="{Binding .}" Aspect="AspectFill" Margin="0" />
+                    </StackLayout>
+                </DataTemplate>
+            </cv:CarouselView.ItemTemplate>
+        </cv:CarouselView>
+
+        <Grid Grid.Row="1" Margin="0" BackgroundColor="Blue">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="50" />
+            </Grid.RowDefinitions>
+            <Button Grid.Row="0" Margin="20,0,20,0" BackgroundColor="#4267B2" TextColor="#FFFFFF" Text="Login with Facebook" FontSize="Large" Clicked="loginButton_Clicked" x:Name="loginButton" />
+            <Button Grid.Row="1" Text="About" Margin="20,0,20,0" VerticalOptions="End"  x:Name="aboutButton" Clicked="aboutButton_Clicked" />
+        </Grid>
+    </Grid>
 </ContentPage>

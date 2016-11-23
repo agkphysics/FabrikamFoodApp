@@ -4,7 +4,7 @@
              x:Class="FabrikamFoodApp.Pages.AboutPage"
              Title="About">
     <StackLayout VerticalOptions="Start" HorizontalOptions="Center">
-        <Label Text="About" FontSize="42" HorizontalTextAlignment="Center" Margin="0,20,0,100" />
+        <Label Text="About" FontSize="42" HorizontalTextAlignment="Center" Margin="0,50,0,150" />
         <Label Text="Fabrikam Food App" HorizontalTextAlignment="Center" />
         <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
             <Label Text="Version:" FontAttributes="Bold" />

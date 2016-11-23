@@ -3,6 +3,7 @@
     "Microsoft.Azure.Mobile.Client": "3.0.3",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0",
     "Newtonsoft.Json": "9.0.1",
+    "Xam.Plugins.Settings": "2.5.1",
     "Xamarin.Forms": "2.3.2.127",
     "Xamarin.Forms.CarouselView": "2.3.0-pre2",
     "Xamarin.Forms.Maps": "2.3.2.127",

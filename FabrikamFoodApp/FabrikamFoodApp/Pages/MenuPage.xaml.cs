@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
-using Microsoft.WindowsAzure.MobileServices;
 using FabrikamFoodApp.DataModels;
 using Xamarin.Forms.Xaml;
 
@@ -14,31 +13,29 @@ namespace FabrikamFoodApp.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MenuPage : ContentPage
     {
-        private static MobileServiceClient mobileClient;
-
         public MenuPage()
         {
             InitializeComponent();
-            mobileClient = new MobileServiceClient("https://fabrikamfood.azurewebsites.net");
-            SetMenuItems();
+            loadingIndicator.IsRunning = true;
+            loadingIndicator.IsVisible = true;
+            RefreshMenuItems();
         }
 
-        private async void SetMenuItems()
+        private async Task RefreshMenuItems()
         {
-            var menuTable = mobileClient.GetTable<Menu>();
+            var menuTable = AzureManager.CurrentInstance.CurrentClient.GetTable<Menu>();
             var menuItems = await menuTable.ToListAsync();
             menu.ItemsSource = menuItems.OrderBy(x => x.Name);
             //var groupedItems = menuItems.GroupBy(x => x.Category).Select(grp => grp.ToList()).ToList();
             //menu.ItemsSource = groupedItems;
+            loadingIndicator.IsRunning = false;
+            await loadingIndicator.TranslateTo(0, -loadingIndicator.Height, 250, Easing.SinInOut);
+            loadingIndicator.IsVisible = false;
         }
 
-        private async void RefreshMenuItems(object sender, EventArgs e)
+        private async void menu_Refreshing(object sender, EventArgs e)
         {
-            var menuTable = mobileClient.GetTable<Menu>();
-            var menuItems = await menuTable.ToListAsync();
-            menu.ItemsSource = menuItems.OrderBy(x => x.Name);
-            //var groupedItems = menuItems.GroupBy(x => x.Category).Select(grp => grp.ToList()).ToList();
-            //menu.ItemsSource = groupedItems;
+            await RefreshMenuItems();
             menu.EndRefresh();
         }
     }

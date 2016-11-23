@@ -14,10 +14,9 @@ namespace FabrikamFoodApp.Pages
     {
         public RootPage()
         {
-            BarTextColor = Color.Purple;
             Children.Add(new HomePage());
             Children.Add(new MenuPage());
-            Children.Add(new AboutPage());
+            Children.Add(new MapPage());
         }
     }
 }

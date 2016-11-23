@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "866618900030",
+    "firebase_url": "https://fabrikam-food-app.firebaseio.com",
+    "project_id": "fabrikam-food-app",
+    "storage_bucket": "fabrikam-food-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:866618900030:android:6904d0ab41e38f4e",
+        "android_client_info": {
+          "package_name": "com.fabrikamfood.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "866618900030-bs5v6lcmj1f8k174ernvqoak8ta25fta.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbbp-n05PtdDiRGeGY02EBtLhZELP90nA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
