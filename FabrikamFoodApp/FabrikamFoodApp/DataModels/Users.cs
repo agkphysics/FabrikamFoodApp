@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace FabrikamFoodApp.DataModels
 {
-    class Users
+    public class Users
     {
         [JsonProperty(PropertyName = "id")]
         public string ID { get; set; }
@@ -16,7 +16,16 @@ namespace FabrikamFoodApp.DataModels
         [JsonProperty(PropertyName = "fbid")]
         public string FacebookID { get; set; }
 
-        [JsonProperty(PropertyName = "home")]
-        public string Home { get; set; }
+        [JsonProperty(PropertyName = "homelat")]
+        public double Homelat { get; set; }
+
+        [JsonProperty(PropertyName = "homelon")]
+        public double Homelon { get; set; }
+
+        [JsonProperty(PropertyName = "address")]
+        public string Address { get; set; }
+
+        [JsonProperty(PropertyName = "email")]
+        public string Email { get; set; }
     }
 }
