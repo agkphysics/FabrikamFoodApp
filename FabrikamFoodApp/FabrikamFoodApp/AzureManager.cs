@@ -8,6 +8,7 @@ using Microsoft.WindowsAzure.MobileServices;
 using Newtonsoft.Json.Linq;
 using FabrikamFoodApp.DataModels;
 using System.Net.Http;
+using Xamarin.Forms.Maps;
 
 namespace FabrikamFoodApp
 {
@@ -49,15 +50,59 @@ namespace FabrikamFoodApp
             get { return currentInstance; }
         }
 
-        public string GetUserProperties()
+        public async Task<Users> GetCurrentUserFromDB()
         {
-            client.GetTable<Users>();
-            return "";
+            var user = await client.GetTable<Users>().LookupAsync(client.CurrentUser.UserId);
+            return user;
+        }
+
+        public async Task UpdateCurrentUserInDB(string fbid = null, string address = null, string email = null)
+        {
+            Users user;
+            var userTable = client.GetTable<Users>();
+
+            if (address != null)
+            {
+                var coords = await new Geocoder().GetPositionsForAddressAsync(address);
+                var pos = coords.First();
+                user = new Users
+                {
+                    ID = client.CurrentUser.UserId,
+                    Address = address,
+                    FacebookID = fbid,
+                    Homelat = pos.Latitude,
+                    Homelon = pos.Longitude,
+                    Email = email
+                };
+            }
+            else
+            {
+                user = new Users
+                {
+                    ID = client.CurrentUser.UserId,
+                    Address = address,
+                    FacebookID = fbid,
+                    Email = email
+                };
+            }
+            
+            var u = await userTable.Where(x => x.ID == client.CurrentUser.UserId).ToListAsync();
+            if (u.Count > 0) await userTable.UpdateAsync(user);
+            else await userTable.InsertAsync(user);
         }
 
         public async Task<SocialLoginResult> GetUserData()
         {
-            return await client.InvokeApiAsync<SocialLoginResult>("getuserinfo", HttpMethod.Get, null);
+            var socialData = await client.InvokeApiAsync<SocialLoginResult>("getuserinfo", HttpMethod.Get, null);
+            await UpdateCurrentUserInDB(socialData.Message.SocialId, null, socialData.Message.Email);
+            return socialData;
+        }
+
+        public async Task DeleteCurrentUser()
+        {
+            var userTable = client.GetTable<Users>();
+            var user = await userTable.LookupAsync(client.CurrentUser.UserId);
+            await userTable.DeleteAsync(user);
         }
     }
 }

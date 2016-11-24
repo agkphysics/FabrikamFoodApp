@@ -4,7 +4,7 @@
              x:Class="FabrikamFoodApp.Pages.HomePage"
              xmlns:cv="clr-namespace:Xamarin.Forms;assembly=Xamarin.Forms.CarouselView"
              Title="Home">
-    <Grid RowSpacing="0" Margin="0" VerticalOptions="FillAndExpand">
+    <Grid RowSpacing="0" Margin="0" VerticalOptions="FillAndExpand" x:Name="mainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="150" />
             <RowDefinition Height="*" />
@@ -19,13 +19,19 @@
             </cv:CarouselView.ItemTemplate>
         </cv:CarouselView>
 
-        <Grid Grid.Row="1" Margin="0" BackgroundColor="Blue">
+        <Grid Grid.Row="1" Margin="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="50" />
+                <RowDefinition Height="50" />
             </Grid.RowDefinitions>
-            <Button Grid.Row="0" Margin="20,0,20,0" BackgroundColor="#4267B2" TextColor="#FFFFFF" Text="Login with Facebook" FontSize="Large" Clicked="loginButton_Clicked" x:Name="loginButton" />
-            <Button Grid.Row="1" Text="About" Margin="20,0,20,0" VerticalOptions="End"  x:Name="aboutButton" Clicked="aboutButton_Clicked" />
+            <StackLayout Grid.Row="0">
+                <Image Source="logo.png" HeightRequest="60" />
+                <Label Text="Welcome to the Fabrikam Food mobile app." Margin="20,0,20,0" HorizontalTextAlignment="Center" />
+            </StackLayout>
+            <Button Grid.Row="1" Margin="20,0,20,0" BackgroundColor="#4267B2" TextColor="#FFFFFF" Text="Login with Facebook" FontSize="Large" Clicked="loginButton_Clicked" x:Name="loginButton" />
+            <Button Grid.Row="1" Margin="20,0,20,0" BackgroundColor="#4267B2" TextColor="#FFFFFF" Text="Logout" FontSize="Large" Clicked="logoutButton_Clicked" x:Name="logoutButton" IsVisible="False" IsEnabled="False" />
+            <Button Grid.Row="2" Text="About" BorderColor="Maroon" TextColor="Maroon" BackgroundColor="White" Margin="20,0,20,0" VerticalOptions="End"  x:Name="aboutButton" Clicked="aboutButton_Clicked" />
         </Grid>
     </Grid>
 </ContentPage>

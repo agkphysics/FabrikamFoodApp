@@ -39,6 +39,7 @@
     <Compile Include="AzureManager.cs" />
     <Compile Include="DataModels\Menu.cs" />
     <Compile Include="DataModels\Stores.cs" />
+    <Compile Include="DataModels\UserFavs.cs" />
     <Compile Include="DataModels\Users.cs" />
     <Compile Include="Helpers\Settings.cs" />
     <Compile Include="Pages\AboutPage.xaml.cs">

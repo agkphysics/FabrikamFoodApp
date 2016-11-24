@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Xamarin.Auth;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -27,12 +26,20 @@ namespace FabrikamFoodApp.Pages
                 "soda_cans.jpg",
                 "wine.jpg"
             };
+            Device.StartTimer(new TimeSpan(0, 0, 5), CycleImage);
+        }
+
+        protected override void OnSizeAllocated(double width, double height)
+        {
+            base.OnSizeAllocated(width, height);
+
+            mainGrid.RowDefinitions[0].Height = new GridLength(Math.Min(0.6666 * width, 150), GridUnitType.Absolute);
         }
 
         // Track whether the user has authenticated.
         bool authenticated = false;
 
-        private async void loginButton_Clicked(object sender, EventArgs eventArgs)
+        private async void loginButton_Clicked(object sender, EventArgs e)
         {
             loginButton.IsEnabled = false;
 
@@ -43,11 +50,30 @@ namespace FabrikamFoodApp.Pages
                 CrossSettings.Current.AddOrUpdateValue("token", AzureManager.CurrentInstance.CurrentClient.CurrentUser.MobileServiceAuthenticationToken);
 
                 loginButton.IsVisible = false;
+                logoutButton.IsVisible = true;
+                loginButton.IsEnabled = true;
 
                 var userInfo = await AzureManager.CurrentInstance.GetUserData();
-                ((RootPage)this.Parent).Children.Insert(2, new UserPage(userInfo.Message.First_Name));
+                ((RootPage)Parent).Children.Insert(2, new UserPage(userInfo.Message.First_Name));
+
+                await DisplayAlert("Logged In", "Successfully logged in.", "OK");
             }
             else loginButton.IsEnabled = true;
+        }
+
+        private async void logoutButton_Clicked(object sender, EventArgs e)
+        {
+            await AzureManager.CurrentInstance.DeleteCurrentUser();
+            await AzureManager.CurrentInstance.CurrentClient.LogoutAsync();
+            authenticated = false;
+            CrossSettings.Current.Remove("userid");
+            CrossSettings.Current.Remove("token");
+            loginButton.IsEnabled = true;
+            loginButton.IsVisible = true;
+            logoutButton.IsVisible = false;
+            logoutButton.IsEnabled = false;
+            ((RootPage)Parent).Children.RemoveAt(2);
+            await DisplayAlert("Logged Out", "Successfully logged out.", "OK");
         }
 
         private async void aboutButton_Clicked(object sender, EventArgs e)
@@ -55,27 +81,42 @@ namespace FabrikamFoodApp.Pages
             await Navigation.PushModalAsync(new AboutPage());
         }
 
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
 
-            string userId = CrossSettings.Current.GetValueOrDefault("user", "");
-            string token = CrossSettings.Current.GetValueOrDefault("token", "");
-
-            if (!token.Equals("") && !userId.Equals(""))
+            if (!authenticated) // Only if were not authenticated already
             {
-                MobileServiceUser user = new MobileServiceUser(userId);
-                user.MobileServiceAuthenticationToken = token;
+                string userId = CrossSettings.Current.GetValueOrDefault("userid", "");
+                string token = CrossSettings.Current.GetValueOrDefault("token", "");
 
-                AzureManager.CurrentInstance.CurrentClient.CurrentUser = user;
+                if (!token.Equals("") && !userId.Equals(""))
+                {
+                    MobileServiceUser user = new MobileServiceUser(userId);
+                    user.MobileServiceAuthenticationToken = token;
 
-                authenticated = true;
+                    AzureManager.CurrentInstance.CurrentClient.CurrentUser = user;
+
+                    authenticated = true;
+                }
+
+                if (authenticated)
+                {
+                    loginButton.IsVisible = false;
+                    loginButton.IsEnabled = false;
+                    logoutButton.IsVisible = true;
+                    logoutButton.IsEnabled = true;
+
+                    var userInfo = await AzureManager.CurrentInstance.GetUserData();
+                    ((RootPage)Parent).Children.Insert(2, new UserPage(userInfo.Message.First_Name));
+                }
             }
+        }
 
-            if (authenticated == true)
-            {
-                loginButton.IsVisible = false;
-            }
+        private bool CycleImage()
+        {
+            imageSlider.Position = (imageSlider.Position + 1) % 5;
+            return true;
         }
     }
 }
