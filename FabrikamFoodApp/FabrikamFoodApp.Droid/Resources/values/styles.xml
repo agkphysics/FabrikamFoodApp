@@ -19,6 +19,9 @@
         <item name="colorAccent">#EDBAB8</item>
         <item name="colorControlActivated">#EDBAB8</item>
         <item name="colorControlHighlight">#EDBAB8</item>
+
+        <item name="android:windowBackground">@color/background</item>
+        
         <!-- You can also set colorControlNormal, colorControlActivated
          colorControlHighlight and colorSwitchThumbNormal. -->
         <item name="windowActionModeOverlay">true</item>

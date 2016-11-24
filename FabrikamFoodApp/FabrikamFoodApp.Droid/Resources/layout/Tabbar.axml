@@ -6,11 +6,11 @@
     android:layout_height="wrap_content"
     android:background="?attr/colorPrimary"
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                                         
+    
     app:tabBackground="@drawable/tab_color_selector"
     app:tabTextColor="@color/maroon"
     app:tabSelectedTextColor="@color/maroon"
     app:tabIndicatorColor="@color/maroon"
     app:tabIndicatorHeight="4dp"
     app:tabGravity="fill"
-    app:tabMode="fixed" />
+    app:tabMode="scrollable" />
