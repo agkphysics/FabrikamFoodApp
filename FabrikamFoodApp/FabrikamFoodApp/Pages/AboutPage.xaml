@@ -3,13 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FabrikamFoodApp.Pages.AboutPage"
              Title="About">
-    <StackLayout VerticalOptions="Start" HorizontalOptions="Center">
-        <Label Text="About" FontSize="42" HorizontalTextAlignment="Center" Margin="0,50,0,150" />
-        <Label Text="Fabrikam Food App" HorizontalTextAlignment="Center" />
-        <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-            <Label Text="Version:" FontAttributes="Bold" />
-            <Label Text="0.1.0" />
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Label Text="About" FontSize="42" HorizontalTextAlignment="Center" Margin="0,50,0,0" Grid.Row="0" VerticalOptions="Start" />
+        <StackLayout Grid.Row="0" VerticalOptions="Center">
+            <Label Text="Fabrikam Food App" HorizontalTextAlignment="Center" />
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                <Label Text="Version:" FontAttributes="Bold" />
+                <Label Text="0.1.0" />
+            </StackLayout>
+            <Label Text="Stock photos taken from picjumbo.com" HorizontalTextAlignment="Center" />
         </StackLayout>
-        <Label Text="Stock photos taken from picjumbo.com" HorizontalTextAlignment="Center" />
-    </StackLayout>
+    </Grid>
 </ContentPage>

@@ -243,3 +243,4 @@ ModelManifest.xml
 *.csv
 *.xlsx
 /Components
+*.svg
