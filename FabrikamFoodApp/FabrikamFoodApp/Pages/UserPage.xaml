@@ -2,5 +2,44 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FabrikamFoodApp.Pages.UserPage">
-    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" VerticalOptions="Center" HorizontalTextAlignment="Center" x:Name="nameLabel" FontSize="42" />
+        <StackLayout Grid.Row="1">
+            <Label Text="Home Address:" TextColor="Maroon" FontSize="20" Margin="20,0,0,0" />
+            <Entry Placeholder="Enter home address" x:Name="addressInput" />
+            <Button Text="Update" Clicked="address_Update" />
+        </StackLayout>
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Label Text="Favourites" FontSize="20" TextColor="Maroon" Grid.Row="0" Margin="20,20,0,0" />
+            <ListView x:Name="favList"
+                      Grid.Row="1"
+                      HasUnevenRows="True"
+                      ItemSelected="OnSelect"
+                      ItemTapped="OnTap"
+                      VerticalOptions="Start">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell Height="50">
+                            <StackLayout Orientation="Vertical" Margin="20,0,20,0" VerticalOptions="Center">
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding Name}" FontAttributes="Bold" />
+                                    <Label Text="{Binding Price, StringFormat='{0:C}'}" />
+                                </StackLayout>
+                                <Label Text="{Binding Description}" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </Grid>
 </ContentPage>

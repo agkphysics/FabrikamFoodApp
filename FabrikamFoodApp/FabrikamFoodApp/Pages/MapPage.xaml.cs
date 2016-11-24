@@ -43,6 +43,16 @@ namespace FabrikamFoodApp.Pages
                 };
                 map.Pins.Add(pin);
             }
+
+            var users = await AzureManager.CurrentInstance.CurrentClient.GetTable<Users>().Where(x => x.ID == AzureManager.CurrentInstance.CurrentClient.CurrentUser.UserId).ToListAsync();
+            if (users.Count > 0)
+            {
+                var user = users[0];
+                if (user.Address != null && !user.Address.Equals(""))
+                {
+                    map.Pins.Add(new Pin { Type = PinType.SavedPin, Address = user.Address, Label = "Home", Position = new Position(user.Homelat, user.Homelon) });
+                }
+            }
         }
 
         protected override void OnAppearing()

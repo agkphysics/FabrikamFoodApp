@@ -37,6 +37,7 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="AzureManager.cs" />
+    <Compile Include="DataModels\DistanceAPIModel.cs" />
     <Compile Include="DataModels\Menu.cs" />
     <Compile Include="DataModels\Stores.cs" />
     <Compile Include="DataModels\UserFavs.cs" />
@@ -114,6 +115,9 @@
     <Reference Include="System.Net.Http.Primitives, Version=1.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Net.Http.2.2.29\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.Primitives.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Services">
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\MonoAndroid\v1.0\System.Web.Services.dll</HintPath>
     </Reference>
     <Reference Include="Validation, Version=2.3.0.0, Culture=neutral, PublicKeyToken=2fc06f0d701809a7, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Validation.2.3.7\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\Validation.dll</HintPath>

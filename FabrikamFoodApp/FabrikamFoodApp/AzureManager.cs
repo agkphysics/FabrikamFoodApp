@@ -34,6 +34,7 @@ namespace FabrikamFoodApp
     {
         private static MobileServiceClient client;
         private static AzureManager currentInstance = new AzureManager();
+        private SocialLoginResult currSocialData;
 
         public MobileServiceClient CurrentClient
         {
@@ -69,10 +70,10 @@ namespace FabrikamFoodApp
                 {
                     ID = client.CurrentUser.UserId,
                     Address = address,
-                    FacebookID = fbid,
                     Homelat = pos.Latitude,
                     Homelon = pos.Longitude,
-                    Email = email
+                    FacebookID = fbid == null ? currSocialData.Message.SocialId : fbid,
+                    Email = email == null ? currSocialData.Message.Email : email
                 };
             }
             else
@@ -81,8 +82,8 @@ namespace FabrikamFoodApp
                 {
                     ID = client.CurrentUser.UserId,
                     Address = address,
-                    FacebookID = fbid,
-                    Email = email
+                    FacebookID = fbid == null ? currSocialData.Message.SocialId : fbid,
+                    Email = email == null ? currSocialData.Message.Email : email
                 };
             }
             
@@ -94,6 +95,7 @@ namespace FabrikamFoodApp
         public async Task<SocialLoginResult> GetUserData()
         {
             var socialData = await client.InvokeApiAsync<SocialLoginResult>("getuserinfo", HttpMethod.Get, null);
+            currSocialData = socialData;
             await UpdateCurrentUserInDB(socialData.Message.SocialId, null, socialData.Message.Email);
             return socialData;
         }
