@@ -37,6 +37,10 @@ namespace FabrikamFoodApp.Pages
                     Label = s.Name,
                     Position = new Position(s.lat, s.lon)
                 };
+                pin.Clicked += (send, e) =>
+                {
+                    Device.OpenUri(new Uri($"https://fabrikamfood.azurewebsites.net/stores/{s.ID}"));
+                };
                 map.Pins.Add(pin);
             }
         }
