@@ -2,23 +2,60 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FabrikamFoodApp.Pages.MenuPage"
+             xmlns:local="clr-namespace:FabrikamFoodApp.Pages"
              Title="Our Menu">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="authTemplate">
+                <ViewCell Height="70">
+                    <StackLayout Orientation="Vertical" Margin="20,0,20,0" VerticalOptions="Center">
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="{Binding Name}" FontAttributes="Bold" />
+                            <Label Text="{Binding Price, StringFormat='{0:C}'}" />
+                            <Image Source="{Binding Img}">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="FavTapped" NumberOfTapsRequired="1" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                        </StackLayout>
+                        <Label Text="{Binding Description}" />
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+            
+            <DataTemplate x:Key="noAuthTemplate">
+                <ViewCell Height="70">
+                    <StackLayout Orientation="Vertical" Margin="20,0,20,0" VerticalOptions="Center">
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="{Binding Name}" FontAttributes="Bold" />
+                            <Label Text="{Binding Price, StringFormat='{0:C}'}" />
+                        </StackLayout>
+                        <Label Text="{Binding Description}" />
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+        
+            <local:AuthTemplateSelector x:Key="templateSelector" AuthTemplate="{StaticResource authTemplate}" NoAuthTemplate="{StaticResource noAuthTemplate}" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
     <StackLayout>
         <ActivityIndicator x:Name="loadingIndicator" />
-        <ListView x:Name="menu" Refreshing="menu_Refreshing" IsPullToRefreshEnabled="True">
-            <ListView.ItemTemplate>
+        <ListView x:Name="menu"
+                  Refreshing="menu_Refreshing"
+                  IsPullToRefreshEnabled="True"
+                  IsGroupingEnabled="True"
+                  HasUnevenRows="True"
+                  ItemSelected="OnSelect"
+                  ItemTapped="OnTap"
+                  ItemTemplate="{StaticResource templateSelector}">
+            <ListView.GroupHeaderTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <StackLayout Orientation="Vertical" Margin="10,0,10,0">
-                            <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding Name}" FontAttributes="Bold" />
-                                <Label Text="{Binding Price, StringFormat='{0:C}'}" />
-                            </StackLayout>
-                            <Label Text="{Binding Description}" />
-                        </StackLayout>
+                        <Label Text="{Binding Title}" TextColor="Maroon" FontAttributes="Bold" FontSize="20" Margin="20,0,20,0" />
                     </ViewCell>
                 </DataTemplate>
-            </ListView.ItemTemplate>
+            </ListView.GroupHeaderTemplate>
         </ListView>
     </StackLayout>
 </ContentPage>

@@ -32,7 +32,7 @@ namespace FabrikamFoodApp.Pages
             {
                 var pin = new Pin
                 {
-                    Type = PinType.Place,
+                    Type = PinType.Generic,
                     Address = s.Address,
                     Label = s.Name,
                     Position = new Position(s.lat, s.lon)
@@ -44,13 +44,16 @@ namespace FabrikamFoodApp.Pages
                 map.Pins.Add(pin);
             }
 
-            var users = await AzureManager.CurrentInstance.CurrentClient.GetTable<Users>().Where(x => x.ID == AzureManager.CurrentInstance.CurrentClient.CurrentUser.UserId).ToListAsync();
-            if (users.Count > 0)
+            if (AzureManager.CurrentInstance.CurrentClient.CurrentUser != null)
             {
-                var user = users[0];
-                if (user.Address != null && !user.Address.Equals(""))
+                var users = await AzureManager.CurrentInstance.CurrentClient.GetTable<Users>().Where(x => x.ID == AzureManager.CurrentInstance.CurrentClient.CurrentUser.UserId).ToListAsync();
+                if (users.Count > 0)
                 {
-                    map.Pins.Add(new Pin { Type = PinType.SavedPin, Address = user.Address, Label = "Home", Position = new Position(user.Homelat, user.Homelon) });
+                    var user = users[0];
+                    if (user.Address != null && !user.Address.Equals(""))
+                    {
+                        map.Pins.Add(new Pin { Type = PinType.SavedPin, Address = user.Address, Label = "Home", Position = new Position(user.Homelat, user.Homelon) });
+                    }
                 }
             }
         }
@@ -59,7 +62,7 @@ namespace FabrikamFoodApp.Pages
         {
             base.OnAppearing();
 
-            map.MoveToRegion(lastRegion);
+            if (lastRegion != null) map.MoveToRegion(lastRegion);
         }
 
         protected override void OnDisappearing()

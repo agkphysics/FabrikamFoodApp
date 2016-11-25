@@ -63,6 +63,13 @@ namespace FabrikamFoodApp.Pages
             GetDistanceData();
         }
 
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            RefreshThings();
+        }
+
         private async void GetDistanceData()
         {
             var stores = await AzureManager.CurrentInstance.CurrentClient.GetTable<Stores>().ToListAsync();

@@ -51,7 +51,7 @@ namespace FabrikamFoodApp.Pages
 
                 loginButton.IsVisible = false;
                 logoutButton.IsVisible = true;
-                loginButton.IsEnabled = true;
+                logoutButton.IsEnabled = true;
 
                 var userInfo = await AzureManager.CurrentInstance.GetUserData();
                 ((RootPage)Parent).Children.Insert(2, new UserPage(userInfo.Message.First_Name));

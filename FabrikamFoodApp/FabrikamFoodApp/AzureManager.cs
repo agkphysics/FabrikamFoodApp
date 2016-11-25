@@ -61,6 +61,13 @@ namespace FabrikamFoodApp
         {
             Users user;
             var userTable = client.GetTable<Users>();
+            var u = await userTable.Where(x => x.ID == client.CurrentUser.UserId).ToListAsync();
+            string currAddress = "";
+
+            if (u.Count > 0)
+            {
+                currAddress = u[0].Address;
+            }
 
             if (address != null)
             {
@@ -78,16 +85,29 @@ namespace FabrikamFoodApp
             }
             else
             {
-                user = new Users
+                if (currAddress != null && !currAddress.Equals(""))
                 {
-                    ID = client.CurrentUser.UserId,
-                    Address = address,
-                    FacebookID = fbid == null ? currSocialData.Message.SocialId : fbid,
-                    Email = email == null ? currSocialData.Message.Email : email
-                };
+                    user = new Users
+                    {
+                        ID = client.CurrentUser.UserId,
+                        Address = currAddress,
+                        FacebookID = fbid == null ? currSocialData.Message.SocialId : fbid,
+                        Email = email == null ? currSocialData.Message.Email : email
+                    };
+                }
+                else
+                {
+                    user = new Users
+                    {
+                        ID = client.CurrentUser.UserId,
+                        Address = address,
+                        FacebookID = fbid == null ? currSocialData.Message.SocialId : fbid,
+                        Email = email == null ? currSocialData.Message.Email : email
+                    };
+                }
             }
             
-            var u = await userTable.Where(x => x.ID == client.CurrentUser.UserId).ToListAsync();
+            
             if (u.Count > 0) await userTable.UpdateAsync(user);
             else await userTable.InsertAsync(user);
         }
